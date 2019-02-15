@@ -4,6 +4,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.scheduler.custom.CustomTask;
+import org.fenixedu.cms.domain.RoleTemplate;
 import org.fenixedu.cms.domain.Site;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,21 +22,16 @@ public class FixHomepagesTask extends CustomTask {
 
     @Override
     public void runTask() {
-        Bennu.getInstance().getUserSet().forEach(
-                u -> {
-                    Person person = u.getPerson();
+        boolean published = HomepageSiteBuilder.getInstance().getPublished();
+        Group canViewGroup = HomepageSiteBuilder.getInstance().getCanViewGroup();
+        RoleTemplate roleTemplate = HomepageSiteBuilder.getInstance().getDefaultRoleTemplate();
 
-                    if (person != null) {
-                        Site homepageSite = person.getHomepage();
-
-                        if (homepageSite != null) {
-                            homepageSite.setPublished(HomepageSiteBuilder.getInstance().getPublished());
-                            homepageSite.setCanViewGroup(HomepageSiteBuilder.getInstance().getCanViewGroup());
-                            homepageSite.setDefaultRoleTemplate(HomepageSiteBuilder.getInstance().getDefaultRoleTemplate());
-                            taskLog("Updating %s website%n", person.getUsername());
-                        }
-                    }
-                }
-        );
+        Bennu.getInstance().getSitesSet().stream()
+                .filter(s -> s.getHomepageSite() != null)
+                .forEach(s -> {
+                    s.setPublished(published);
+                    s.setCanViewGroup(canViewGroup);
+                    s.setDefaultRoleTemplate(roleTemplate);
+                });
     }
 }
