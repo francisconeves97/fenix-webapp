@@ -45,9 +45,9 @@ public class CancelEntriesWithNoCardsTask extends CustomTask {
                         SantanderUser santanderUser = new SantanderUser(user, userInfoService);
                         CreateRegisterRequest createRegisterRequest = new CreateRegisterRequest();
 
-                        createRegisterRequest.setRole(santanderUser.getRole());
+                        createRegisterRequest.setRole("STUDENT");
                         createRegisterRequest.setPhoto(new BufferedImage(1, 1, 1));
-                        createRegisterRequest.setName(user.getDisplayName());
+                        createRegisterRequest.setName("Name");
                         createRegisterRequest.setDepartmentAcronym(santanderUser.getDepartmentAcronym());
                         createRegisterRequest.setCampus("Alameda");
                         createRegisterRequest.setUsername(user.getUsername());
