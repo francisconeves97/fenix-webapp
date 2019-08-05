@@ -18,8 +18,6 @@ import org.fenixedu.santandersdk.service.SantanderSdkService;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 
 public class CancelEntriesWithNoCardsTask extends CustomTask {
 
